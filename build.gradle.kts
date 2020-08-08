@@ -20,6 +20,15 @@ repositories {
     maven("https://jitpack.io")
 }
 
+tasks.withType<KotlinCompile> {
+    sourceCompatibility = JavaVersion.VERSION_1_8.name
+    targetCompatibility = JavaVersion.VERSION_1_8.name
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=scrict")
+        jvmTarget= "1.8"
+    }
+}
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.koin:koin-core:2.1.6")
