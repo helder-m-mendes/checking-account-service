@@ -37,7 +37,7 @@ tasks {
 
 fun loadEnvVars(task: JavaExec,envPath: String) {
     file(envPath).readLines().forEach {
-        val envVar = it.split("=")
+        val envVar = it.split("=", limit=2)
         if (envVar.size > 1) {
             print("my var is " + envVar[0] + envVar[1])
             task.environment(envVar[0], envVar[1])

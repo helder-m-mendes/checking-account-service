@@ -17,7 +17,7 @@ val qualifier = StringQualifier("mongo")
 object Modules {
     fun modules() = module {
         single { EnvironmentConfig() }
-        single<DataSource<MongoDatabase>>(qualifier) { MongoDataSourceImpl() }
+        single<DataSource<MongoDatabase>>(qualifier) { MongoDataSourceImpl(get<EnvironmentConfig>().mongoConnection) }
         single<CheckingAccountRepository> { CheckingAccountRepositoryImpl(get(qualifier)) }
         single<CheckingAccountEventStoreRepository> { CheckingAccountEventStoreRepositoryImpl(get(qualifier)) }
         single {CreateCheckingAccountCommandHandler(get(), get(), get(qualifier)) }

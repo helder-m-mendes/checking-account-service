@@ -7,8 +7,10 @@ import com.mongodb.WriteConcern
 import com.mongodb.client.MongoDatabase
 import org.litote.kmongo.KMongo
 
-class MongoDataSourceImpl: DataSource<MongoDatabase> {
-    private val mongoClient = KMongo.createClient("mongodb+srv://checking_account_service:checking_account_service@cluster0.xhuux.mongodb.net/<dbname>?retryWrites=true&w=majority")
+class MongoDataSourceImpl(
+    mongoConnection: String
+): DataSource<MongoDatabase> {
+    private val mongoClient = KMongo.createClient(mongoConnection)
     private val checkingAccountDb: MongoDatabase =
         mongoClient.getDatabase("checking_account")
     private val checkingAccountLedgerDb: MongoDatabase =
