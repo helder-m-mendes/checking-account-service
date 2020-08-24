@@ -29,6 +29,22 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+tasks {
+    "run"(JavaExec::class) {
+        loadEnvVars(this,".env")
+    }
+}
+
+fun loadEnvVars(task: JavaExec,envPath: String) {
+    file(envPath).readLines().forEach {
+        val envVar = it.split("=")
+        if (envVar.size > 1) {
+            print("my var is " + envVar[0] + envVar[1])
+            task.environment(envVar[0], envVar[1])
+        }
+    }
+}
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
     implementation("org.koin:koin-core:2.1.6")
@@ -37,5 +53,5 @@ dependencies {
     implementation("com.github.guepardoapps:kulid:1.1.2.0")
     implementation("org.litote.kmongo:kmongo:4.0.3")
     implementation("com.natpryce:konfig:1.6.10.0")
+    implementation("org.slf4j:slf4j-api:2.0.0-alpha1")
 }
-

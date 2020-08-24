@@ -1,7 +1,8 @@
 package com.checkingaccount.domain.events
 
-import com.checkingaccount.domain.CheckingAccount
+import java.time.LocalDateTime
 
 open class CheckingAccountEvent(
-    open val checkingAccount: CheckingAccount
+    open val accountId: String,
+    val createdAt: LocalDateTime = LocalDateTime.now()
 )

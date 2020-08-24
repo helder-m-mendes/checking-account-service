@@ -1,9 +1,13 @@
 package com.checkingaccount.infrasctructure.datasources
 
-interface DataSource<Database, Session> {
+interface DataSource<Database> {
     fun getCheckingAccountDatabase(): Database
 
     fun getCheckingAccountLedgerDatase(): Database
 
-    fun getSession(): Session
+    fun startTransaction()
+
+    fun abortTransaction()
+
+    fun endTransaction()
 }
