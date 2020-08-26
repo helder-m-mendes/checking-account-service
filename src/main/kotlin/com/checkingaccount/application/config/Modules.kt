@@ -20,7 +20,7 @@ object Modules {
         single<DataSource<MongoDatabase>>(qualifier) { MongoDataSourceImpl(get<EnvironmentConfig>().mongoConnection) }
         single<CheckingAccountRepository> { CheckingAccountRepositoryImpl(get(qualifier)) }
         single<CheckingAccountEventStoreRepository> { CheckingAccountEventStoreRepositoryImpl(get(qualifier)) }
-        single {CreateCheckingAccountCommandHandler(get(), get(), get(qualifier)) }
+        single {CreateCheckingAccountCommandHandler(get()) }
         single { CheckingAccountController(get()) }
         single { CheckingAccountRoutes(get()) }
     }
