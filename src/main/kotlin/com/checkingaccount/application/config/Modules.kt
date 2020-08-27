@@ -1,6 +1,7 @@
 package com.checkingaccount.application.config
 
 import com.checkingaccount.application.commands.CreateCheckingAccountCommandHandler
+import com.checkingaccount.application.commands.DepositCommandHandler
 import com.checkingaccount.application.web.controllers.CheckingAccountController
 import com.checkingaccount.application.web.routes.CheckingAccountRoutes
 import com.checkingaccount.infrasctructure.datasources.DataSource
@@ -21,7 +22,8 @@ object Modules {
         single<CheckingAccountRepository> { CheckingAccountRepositoryImpl(get(qualifier)) }
         single<CheckingAccountEventStoreRepository> { CheckingAccountEventStoreRepositoryImpl(get(qualifier)) }
         single {CreateCheckingAccountCommandHandler(get()) }
-        single { CheckingAccountController(get()) }
+        single { DepositCommandHandler(get()) }
+        single { CheckingAccountController(get(), get()) }
         single { CheckingAccountRoutes(get()) }
     }
 }
