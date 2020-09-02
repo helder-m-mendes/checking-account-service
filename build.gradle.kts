@@ -54,4 +54,5 @@ dependencies {
     implementation("org.litote.kmongo:kmongo:4.0.3")
     implementation("com.natpryce:konfig:1.6.10.0")
     implementation("org.slf4j:slf4j-api:2.0.0-alpha1")
+    implementation("org.apache.logging.log4j:log4j-slf4j18-impl:2.13.0")
 }

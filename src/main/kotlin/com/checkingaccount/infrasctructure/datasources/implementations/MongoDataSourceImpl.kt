@@ -1,7 +1,6 @@
 package com.checkingaccount.infrasctructure.datasources.implementations
 
 import com.checkingaccount.infrasctructure.datasources.DataSource
-import com.mongodb.ClientSessionOptions
 import com.mongodb.ReadConcern
 import com.mongodb.TransactionOptions
 import com.mongodb.WriteConcern

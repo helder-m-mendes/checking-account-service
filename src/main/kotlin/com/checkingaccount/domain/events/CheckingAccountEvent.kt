@@ -3,9 +3,19 @@ package com.checkingaccount.domain.events
 import com.checkingaccount.domain.Money
 import java.time.LocalDateTime
 
-open class CheckingAccountEvent(
+sealed class CheckingAccountEvent(
     open val accountId: String,
     open val value: Money,
     val type: Class<*>,
     val createdAt: LocalDateTime = LocalDateTime.now()
 )
+
+data class CheckingAccountCreditedEvent(
+    override val accountId: String,
+    override val value: Money
+): CheckingAccountEvent(accountId, value, CheckingAccountCreditedEvent::class.java)
+
+data class CheckingAccountDebitedEvent(
+    override val accountId: String,
+    override val value: Money
+): CheckingAccountEvent(accountId, value, CheckingAccountDebitedEvent::class.java)

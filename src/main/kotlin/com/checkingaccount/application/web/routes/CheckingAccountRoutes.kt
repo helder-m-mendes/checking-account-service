@@ -10,8 +10,13 @@ class CheckingAccountRoutes(
     fun listen() {
         path("account") {
             post(checkingAccountController::create)
-            path(":account-id/deposit") {
-                post(checkingAccountController::deposit)
+            path(":account-id") {
+                path("deposit") {
+                    post(checkingAccountController::deposit)
+                }
+                path("withdrawal") {
+                    post(checkingAccountController::withdraw)
+                }
             }
         }
     }

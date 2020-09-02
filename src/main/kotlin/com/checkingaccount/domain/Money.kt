@@ -17,6 +17,10 @@ data class Money internal constructor(internal val money: JodaMoney) : Comparabl
 
     override fun compareTo(other: Money) = money.compareTo(other.money)
 
+    operator fun plus(value: Money) = Money(money.plus(value.money))
+
+    operator fun minus(value: Money) = Money(money.minus(value.money))
+
     operator fun times(other: BigDecimal): Money = Money(money.multipliedBy(other, RoundingMode.HALF_EVEN))
 
     fun asBigDecimal(): BigDecimal = money.toBigMoney().amount
