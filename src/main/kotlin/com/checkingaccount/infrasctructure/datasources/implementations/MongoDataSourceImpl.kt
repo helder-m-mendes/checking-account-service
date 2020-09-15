@@ -14,22 +14,9 @@ class MongoDataSourceImpl(
     private val checkingAccountDb: MongoDatabase =
         mongoClient.getDatabase("checking_account")
     private val checkingAccountLedgerDb: MongoDatabase =
-        mongoClient.getDatabase("checking_account_ledger")
-    private val session = mongoClient.startSession()
+        mongoClient.getDatabase("checking_account")
 
     override fun getCheckingAccountDatabase() = checkingAccountDb
 
-    override fun getCheckingAccountLedgerDatase() = checkingAccountLedgerDb
-
-    override fun startTransaction() {
-        session.startTransaction(TransactionOptions.builder().readConcern(ReadConcern.SNAPSHOT).writeConcern(WriteConcern.MAJORITY).build())
-    }
-
-    override fun abortTransaction() {
-        session.abortTransaction()
-    }
-
-    override fun endTransaction() {
-        session.commitTransaction()
-    }
+    override fun getCheckingAccountLedgerDatabase() = checkingAccountLedgerDb
 }

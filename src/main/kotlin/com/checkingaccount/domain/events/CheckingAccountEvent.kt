@@ -19,3 +19,9 @@ data class CheckingAccountDebitedEvent(
     override val accountId: String,
     override val value: Money
 ): CheckingAccountEvent(accountId, value, CheckingAccountDebitedEvent::class.java)
+
+data class CheckingAccountTransferredEvent(
+    override val accountId: String,
+    override val value: Money,
+    val toAccount: String
+): CheckingAccountEvent(accountId, value, CheckingAccountTransferredEvent::class.java)

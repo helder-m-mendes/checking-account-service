@@ -5,15 +5,15 @@ import com.checkingaccount.domain.events.CheckingAccountEvent
 import com.checkingaccount.infrasctructure.datasources.DataSource
 import com.checkingaccount.infrasctructure.repositories.CheckingAccountEventStoreRepository
 import com.mongodb.client.MongoDatabase
-import com.mongodb.client.model.Filters.eq
+import com.mongodb.client.model.Filters.*
 import com.mongodb.client.model.Indexes
 import org.bson.Document
 
 class CheckingAccountEventStoreRepositoryImpl(
     dataSource: DataSource<MongoDatabase>
 ): CheckingAccountEventStoreRepository {
-    private val db = dataSource.getCheckingAccountLedgerDatase()
-        .getCollection("checking_account_event").also {
+    private val db = dataSource.getCheckingAccountLedgerDatabase()
+        .getCollection("checking_account_ledger").also {
             it.createIndex(Indexes.ascending("account_id"))
             it.createIndex(Indexes.ascending("created_at"))
         }
@@ -23,7 +23,8 @@ class CheckingAccountEventStoreRepositoryImpl(
     }
 
     override fun retrieve(accountId: String)  =
-        db.find(eq("account_id", accountId)).toList().map { document ->
+        db.find(or(eq("account_id", accountId),
+            eq("to_account", accountId))).toList().map { document ->
             CheckingAccountEvent::class.sealedSubclasses.firstOrNull {
                 document["type"] == it.qualifiedName
             }.let {

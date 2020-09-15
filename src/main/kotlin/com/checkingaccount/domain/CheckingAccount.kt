@@ -4,6 +4,7 @@ import com.checkingaccount.application.exceptions.InsufficientFundsException
 import com.checkingaccount.domain.events.CheckingAccountCreditedEvent
 import com.checkingaccount.domain.events.CheckingAccountDebitedEvent
 import com.checkingaccount.domain.events.CheckingAccountEvent
+import com.checkingaccount.domain.events.CheckingAccountTransferredEvent
 import java.math.BigDecimal
 
 class CheckingAccount(
@@ -17,6 +18,7 @@ class CheckingAccount(
             when (it) {
                 is CheckingAccountCreditedEvent -> balance += it.value
                 is CheckingAccountDebitedEvent -> balance -= it.value
+                is CheckingAccountTransferredEvent -> if (accountId == it.accountId) balance -= it.value else balance += it.value
             }
         }
     }
@@ -24,6 +26,11 @@ class CheckingAccount(
     fun deposit(value: Money) = credit(value * BigDecimal(1.005))
 
     fun withdraw(value: Money) = debit(value * BigDecimal(1.01))
+
+    fun transfer(value: Money, toAccount: String) =
+        debit(value).let {
+            CheckingAccountTransferredEvent(accountId, value, toAccount)
+        }
 
     private fun credit(value: Money) =
         CheckingAccountCreditedEvent(

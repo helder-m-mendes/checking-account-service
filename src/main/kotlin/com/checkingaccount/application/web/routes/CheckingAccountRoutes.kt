@@ -14,8 +14,13 @@ class CheckingAccountRoutes(
                 path("deposit") {
                     post(checkingAccountController::deposit)
                 }
+
                 path("withdrawal") {
                     post(checkingAccountController::withdraw)
+                }
+
+                path("transfer") {
+                    post(checkingAccountController::transfer)
                 }
             }
         }
